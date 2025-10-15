@@ -6,6 +6,11 @@ const userRouter = require('./Routes/user.route')
 
 
 require('dotenv').config(); 
+
+const corsOptions = {
+  origin: 'https://acupclient.onrender.com'
+};
+app.use(cors(corsOptions));
 require('ejs')
 app.set('view engine', 'ejs')
 // Middleware
