@@ -10,6 +10,10 @@ require('dotenv').config();
 const corsOptions = {
   origin: 'https://acupclient.onrender.com'
 };
+// const corsOptions = {
+//   origin: 'http://localhost:5173'
+// };
+
 app.use(cors(corsOptions));
 require('ejs')
 app.set('view engine', 'ejs')
