@@ -5,7 +5,7 @@ const userModel = require('../Models/user.model');
 const authenticate = async (req, res, next) => {
   // Get the token from the Authorization header
   const token = req.header('Authorization')?.replace('Bearer ', '');
-
+  
   if (!token) {
     return res.status(401).json({ error: 'No token provided' });
   }

@@ -17,10 +17,12 @@ const createToken = (_id) => {
 };
 // Configure nodemailer transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  host: 'smtp.gmail.com', // Gmail's SMTP server
+  port: 587,              // Port for TLS
+  secure: false,          // 'false' because we're using TLS on port 587
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS
+    user: process.env.EMAIL_USER, // Your full Gmail address
+    pass: process.env.EMAIL_PASS  // The 16-character App Password
   }
 });
 
