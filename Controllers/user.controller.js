@@ -113,7 +113,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       message:"Login Successful",
       user:{
-        _id: user._id, name: user.name, email, balance:user.balance, accountNumber: user.accountNumber, token 
+        _id: user._id, name: user.name, email, balance:user.balance, accountNumber: user.accountNumber, hasTranPin: !!user.tranPin, token 
       }
     })
   } catch (error) {
@@ -219,7 +219,7 @@ const generateTransactionRef = async () => {
   return ref;
 };
 
-const setTranPin = async (req, res) =>{
+const setTranPin = async (req, res) => {
   try {
     const { tranPin } = req.body;
     if (!tranPin || !/^\d{4}$/.test(tranPin)) {
@@ -227,10 +227,23 @@ const setTranPin = async (req, res) =>{
     }
     const user = await userModel.findById(req.user._id);
     if (!user) return res.status(404).json({ error: "User not found" });
+    
+    // ADD THIS CHECK - prevents setting PIN twice
+    if (user.tranPin) {
+      return res.status(400).json({ 
+        error: "Transaction PIN already set. Contact support to reset." 
+      });
+    }
+    
     const salt = await bcrypt.genSalt(10);
     user.tranPin = await bcrypt.hash(tranPin, salt);
     await user.save();
-    res.status(200).json({ message: "Transaction PIN set successfully" });
+    
+    // UPDATE THIS - add hasTranPin to response
+    res.status(200).json({ 
+      message: "Transaction PIN set successfully",
+      hasTranPin: true
+    });
   } catch (error) {
     console.error("Set Transaction PIN error:", error.message);
     res.status(500).json({ error: "Failed to set transaction PIN" });

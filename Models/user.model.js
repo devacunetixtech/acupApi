@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
         password: {type: String, required: true, minlength: 3, maxlength: 1024},
         phoneNo: Number,
         accountNumber: { type: String, unique: true },
-        balance: { type: Number, default: 0 },
+        balance: { type: Number, default: 150 },
         tranPin: { type: String, default: null }
     },{
         timestamps:true,
