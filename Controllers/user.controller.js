@@ -112,7 +112,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       message:"Login Successful",
       user:{
-        _id: user._id, name: user.name, email, balance:user.balance, accountNumber: user.accountNumber, hasTranPin: !!user.tranPin, token, phoneNo
+        _id: user._id, name: user.name, email, balance:user.balance, accountNumber: user.accountNumber, hasTranPin: !!user.tranPin, token, phoneNo: user.phoneNo  
       }
     })
   } catch (error) {
