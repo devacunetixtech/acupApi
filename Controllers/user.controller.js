@@ -9,7 +9,6 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const mongoose = require('mongoose');
 
-
 const createToken = (_id) => {
   const jwtkey = process.env.JWT_SECRET_KEY;
 
@@ -89,7 +88,7 @@ const registerUser = async (req, res) => {
     await transporter.sendMail(mailOptions);
     console.log('Confirmation email sent to:', email);
     const token = createToken(user._id)
-    res.status(200).json({ _id: user._id, name, email, accountNumber, token })
+    res.status(200).json({ _id: user._id, name, email, accountNumber, token, phoneNo })
   } catch (error) {
     console.log(error)
     res.status(500).json(error);
@@ -113,7 +112,7 @@ const loginUser = async (req, res) => {
     res.status(200).json({
       message:"Login Successful",
       user:{
-        _id: user._id, name: user.name, email, balance:user.balance, accountNumber: user.accountNumber, hasTranPin: !!user.tranPin, token 
+        _id: user._id, name: user.name, email, balance:user.balance, accountNumber: user.accountNumber, hasTranPin: !!user.tranPin, token, phoneNo
       }
     })
   } catch (error) {
@@ -151,7 +150,6 @@ const getDashboard = async (req, res) => {
     res.status(401).json({ message: "Invalid or expired token" });
   }
 };
-
 
 const findUser = async (req, res) => {
   const userId = req.params.userId;
@@ -400,6 +398,5 @@ const createTransfer = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 
 module.exports = { registerUser, loginUser, getDashboard, findUser, getTransactionHistory, createTransfer, setTranPin, getRecipientName };
