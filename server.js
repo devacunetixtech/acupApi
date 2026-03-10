@@ -8,7 +8,7 @@ const userRouter = require('./Routes/user.route')
 require('dotenv').config(); 
 
 const corsOptions = {
-  origin: 'https://acupclient.onrender.com'
+  origin: 'https://portfolio.devsammy.online'
 };
 // const corsOptions = {
 //   origin: 'http://localhost:5173'
